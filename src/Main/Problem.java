@@ -29,40 +29,48 @@ public class Problem {
 	
 	
 
-private int CasoSallah(int[][] matrizMax, int mitad) {
-		int p = matrizDeTerreno[0].length / 2; // Sallah empieza en la fila inferior, columna central
+	private int CasoSallah(int[][] matrizMax, int mitad) {
+		int p = matrizDeTerreno[0].length / 2; 
 	
-		// Recorremos la matriz desde la fila inferior hacia arriba (donde Sallah se mueve)
+		
 		for (int i = matrizDeTerreno.length - 1; i >= mitad; i--) {
-			for (int j = Math.max(0, p - (matrizDeTerreno.length - 1 - i)); j <= Math.min(matrizDeTerreno[0].length - 1, p + (matrizDeTerreno.length - 1 - i)); j++) {
-
-
+			int n = matrizDeTerreno.length - 1 - i; 
+	
+			int inicio = Math.max(0, p - n); 
+			int fin = Math.min(matrizDeTerreno[0].length - 1, p + n); 
+	
+			for (int j = inicio; j <= fin; j++) {
+				
 				System.out.println(i);
 				System.out.println(j);
 				System.out.println(p);
 
-	
 				if (matrizDeTerreno[i][j] == -1) {
-					matrizMax[i][j] = Integer.MIN_VALUE; // Si es una celda maldita
-					
-				} else if (i == matrizDeTerreno.length - 1 && j == p) {
-					matrizMax[i][j] = 0; // Inicio de Sallah en la última fila, columna central
-					
+					matrizMax[i][j] = Integer.MIN_VALUE; 
+				}
+				else if (i == matrizDeTerreno.length - 1 && j == p) {
+					matrizMax[i][j] = 0; 
 				}
 				else if (i==matrizDeTerreno.length-2) {
 					matrizMax[i][j] = matrizDeTerreno[i][j];
+				}
+				else if (j == p - n) {
+					matrizMax[i][j] = matrizMax[i+1][j+1] + matrizDeTerreno[i][j];
+				}
+				else if (j == p + n){
+					matrizMax[i][j] = matrizMax[i+1][j-1] + matrizDeTerreno[i][j];
+				}
+				else if (j==0 && j != p - n){
+					matrizMax[i][j] = Math.max(matrizMax[i+1][j+1] + matrizDeTerreno[i][j], matrizMax[i+1][j] + matrizDeTerreno[i][j]);
+				}
+				else if (j==matrizDeTerreno[0].length-1 && j != p + n){ 
+					matrizMax[i][j] = Math.max(matrizMax[i+1][j-1] + matrizDeTerreno[i][j], matrizMax[i+1][j] + matrizDeTerreno[i][j]);
 
 				}
+				else{
+					matrizMax[i][j] = Math.max(Math.max(matrizMax[i+1][j-1] + matrizDeTerreno[i][j], matrizMax[i+1][j] + matrizDeTerreno[i][j]), matrizMax[i+1][j+1] + matrizDeTerreno[i][j]);
+				}
 
-				/*else if(i>=mitad){
-					matrizMax[i][j] = Math.max(matrizMax[i+1][j] + matrizDeTerreno[i][j], matrizMax[i+1][j-1] + matrizDeTerreno[i][j]);
-				}
-				/*else if(j==0){
-					matrizMax[i][j] = Math.max(matrizMax[i+1][j] + matrizDeTerreno[i][j], matrizMax[i+1][j+1] + matrizDeTerreno[i][j]);
-				}
-				else if(j>0 && i>=p){
-        			matrizMax[i][j] = Math.max(Math.max(matrizMax[i+1][j] + matrizDeTerreno[i][j], matrizMax[i+1][j-1] + matrizDeTerreno[i][j]), matrizMax[i+1][j+1] + matrizDeTerreno[i][j]);
-				}*/
 			}
 		}
 	
@@ -77,6 +85,7 @@ private int CasoSallah(int[][] matrizMax, int mitad) {
 	
 		return 0;
 	}
+	
 
 	private int CasoMarion(int[][] matrizMax, int mitad) {
 		int p = matrizDeTerreno[0].length - 1; // Marion empieza en la esquina superior derecha
