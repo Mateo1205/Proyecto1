@@ -29,12 +29,105 @@ public class Problem {
 	
 	
 
-	private int CasoSallah(int[][] matrizMax, int mitad) {
-		// TODO Auto-generated method stub
+private int CasoSallah(int[][] matrizMax, int mitad) {
+		int p = matrizDeTerreno[0].length / 2; // Sallah empieza en la fila inferior, columna central
+	
+		// Recorremos la matriz desde la fila inferior hacia arriba (donde Sallah se mueve)
+		for (int i = matrizDeTerreno.length - 1; i >= mitad; i--) {
+			for (int j = Math.max(0, p - (matrizDeTerreno.length - 1 - i)); j <= Math.min(matrizDeTerreno[0].length - 1, p + (matrizDeTerreno.length - 1 - i)); j++) {
+
+
+				System.out.println(i);
+				System.out.println(j);
+				System.out.println(p);
+
+	
+				if (matrizDeTerreno[i][j] == -1) {
+					matrizMax[i][j] = Integer.MIN_VALUE; // Si es una celda maldita
+					
+				} else if (i == matrizDeTerreno.length - 1 && j == p) {
+					matrizMax[i][j] = 0; // Inicio de Sallah en la última fila, columna central
+					
+				}
+				else if (i==matrizDeTerreno.length-2) {
+					matrizMax[i][j] = matrizDeTerreno[i][j];
+
+				}
+
+				/*else if(i>=mitad){
+					matrizMax[i][j] = Math.max(matrizMax[i+1][j] + matrizDeTerreno[i][j], matrizMax[i+1][j-1] + matrizDeTerreno[i][j]);
+				}
+				/*else if(j==0){
+					matrizMax[i][j] = Math.max(matrizMax[i+1][j] + matrizDeTerreno[i][j], matrizMax[i+1][j+1] + matrizDeTerreno[i][j]);
+				}
+				else if(j>0 && i>=p){
+        			matrizMax[i][j] = Math.max(Math.max(matrizMax[i+1][j] + matrizDeTerreno[i][j], matrizMax[i+1][j-1] + matrizDeTerreno[i][j]), matrizMax[i+1][j+1] + matrizDeTerreno[i][j]);
+				}*/
+			}
+		}
+	
+		// Mostrar la matriz máxima para Sallah
+		System.out.println("Matriz Maxima para Sallah:");
+		for (int i = 0; i < matrizMax.length; i++) {
+			for (int j = 0; j < matrizMax[i].length; j++) {
+				System.out.print(matrizMax[i][j] + " ");
+			}
+			System.out.println();
+		}
+	
 		return 0;
 	}
 
 	private int CasoMarion(int[][] matrizMax, int mitad) {
+		int p = matrizDeTerreno[0].length - 1; // Marion empieza en la esquina superior derecha
+		
+		
+		// Recorremos la matriz solo en las columnas a la derecha (donde Marion se mueve)
+		for (int i = 0; i < mitad + 1; i++) {
+			for (int j = matrizDeTerreno[0].length - 1; j >= p; j--) {
+
+				if (matrizDeTerreno[i][j] == -1) {
+					matrizMax[i][j] = Integer.MIN_VALUE; // Si es una celda maldita
+				}
+				else if(i==0 && j==matrizDeTerreno[0].length-1) {
+        			matrizMax[i][j] = 0;
+        			
+        		}
+				else if(matrizDeTerreno[0].length-1 == i+j) {
+        			matrizMax[i][j] = matrizMax[i-1][j+1] + matrizDeTerreno[i][j];
+        			
+        		}else if(i==1 && j==matrizDeTerreno[0].length-1) {
+					matrizMax[i][j] = matrizMax[i-1][j] + matrizDeTerreno[i][j];
+
+        		}else if(i>1 && j==matrizDeTerreno[0].length-1) {
+        			matrizMax[i][j] = Math.max(matrizMax[i-1][j-1] + matrizDeTerreno[i][j], matrizMax[i-1][j] + matrizDeTerreno[i][j]);
+        		
+        		}else if(i>1 && j==0) {
+        			matrizMax[i][j] = Math.max(matrizMax[i-1][j] + matrizDeTerreno[i][j], matrizMax[i-1][j+1] + matrizDeTerreno[i][j]);
+        		
+        		}else if(i+j == matrizDeTerreno[0].length) {
+        			matrizMax[i][j] = Math.max(matrizMax[i-1][j] + matrizDeTerreno[i][j], matrizMax[i-1][j-1] + matrizDeTerreno[i][j]);
+        		
+        		}else if(i>=1 && j>=1) {
+        			matrizMax[i][j] = Math.max(Math.max(matrizMax[i-1][j+1] + matrizDeTerreno[i][j], matrizMax[i-1][j] + matrizDeTerreno[i][j]), matrizMax[i-1][j-1] + matrizDeTerreno[i][j]);
+        		}
+			}
+			// Nos aseguramos de movernos solo en las columnas que corresponden a Marion
+			if (p > 0) {
+				p--; // Reducimos el límite izquierdo de Marion
+				}
+		}
+		
+		
+	
+		// Mostrar la matriz máxima
+		System.out.println("Matriz Maxima para Marion:");
+		for (int i = 0; i < matrizMax.length; i++) {
+			for (int j = 0; j < matrizMax[i].length; j++) {
+				System.out.print(matrizMax[i][j] + " ");
+			}
+			System.out.println();
+		}
 		
 		return 0;
 	}
