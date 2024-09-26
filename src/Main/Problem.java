@@ -11,6 +11,7 @@ public class Problem {
 		matrizVisita = new boolean[matrizDeTerreno.length][matrizDeTerreno[0].length];
 	}
 
+	
 	public int hallarMaximoReliquias(){
 		
 		int[][] matrizMax = new int[matrizDeTerreno.length][matrizDeTerreno[0].length];
