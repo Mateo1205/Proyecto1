@@ -31,7 +31,7 @@ public class Problem {
 		return CasoIndiana + CasoMarion + CasoSallah;
 	}
 	
-	// Encontrar el numero de rerliquias maxima qeu pueda llegar cada jugardor
+	// Encontrar el numero de reliquias maxima qeu pueda llegar cada jugardor
 	private int hallarMayorReliquias(int[][] matrizMax){
 		int mitad = matrizDeTerreno.length/2;
         int mayor = -1;
